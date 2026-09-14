@@ -193,12 +193,8 @@
       ],
       "file": "lemonade_models_gpt_oss_120b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -232,12 +228,8 @@
       ],
       "file": "lemonade_models_gpt_oss_20b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -271,12 +263,8 @@
       ],
       "file": "lemonade_models_qwen3_35b_a3b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -310,12 +298,8 @@
       ],
       "file": "lemonade_models_qwen3_coder_30b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -349,12 +333,8 @@
       ],
       "file": "lemonade_models_gemma_4_e2b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -388,12 +368,8 @@
       ],
       "file": "lemonade_models_qwen3_4b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -427,12 +403,8 @@
       ],
       "file": "lemonade_models_sdxl_turbo.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -465,9 +437,7 @@
       ],
       "file": "uv.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
+        "linux": [],
         "windows": []
       },
       "validate": {
@@ -493,9 +463,7 @@
       ],
       "file": "agent_canvas.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
+        "linux": [],
         "windows": []
       },
       "validate": {
@@ -522,12 +490,8 @@
       ],
       "file": "ollama.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -553,12 +517,8 @@
       ],
       "file": "ollama_models_gpt_oss_20b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -584,12 +544,8 @@
       ],
       "file": "hermes.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -614,9 +570,7 @@
       ],
       "file": "distrobox.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
+        "linux": [],
         "windows": []
       },
       "validate": {
@@ -642,9 +596,7 @@
       ],
       "file": "ds4_toolbox_image.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
+        "linux": [],
         "windows": []
       },
       "validate": {
@@ -670,9 +622,7 @@
       ],
       "file": "ds4_cockpit.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
+        "linux": [],
         "windows": []
       },
       "validate": {
@@ -699,12 +649,8 @@
       ],
       "file": "openclaw.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {
@@ -828,12 +774,8 @@
       ],
       "file": "lmstudio_models_qwen3_coder_30b.md",
       "preinstalled": {
-        "linux": [
-          "halo_box"
-        ],
-        "windows": [
-          "halo_box"
-        ]
+        "linux": [],
+        "windows": []
       },
       "validate": {
         "linux": {

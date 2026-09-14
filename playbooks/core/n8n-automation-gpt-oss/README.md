@@ -52,21 +52,25 @@ n8n includes a **native Lemonade node** (`Lemonade Chat Model`) that provides a 
 <!-- @require:driver -->
 <!-- @device:end -->
 
+<!-- @require = dependency docs rendered on the website; @prereq = CI-only, validated and auto-installed before tests (never rendered) -->
+
 <!-- @os:windows -->
-<!-- @require:lemonade,nodejs,n8n -->
+<!-- @require:lemonade,nodejs -->
+<!-- @prereq:n8n -->
 <!-- @os:end -->
 
 <!-- @os:linux -->
-<!-- @require:lemonade,podman,nodejs,n8n -->
+<!-- @require:lemonade,podman -->
+<!-- @prereq:nodejs,n8n -->
 <!-- @os:end -->
 
 <!-- @device:halo,halo_box -->
-<!-- @require:lemonade-models-gpt-oss-120b -->
+<!-- @prereq:lemonade-models-gpt-oss-120b -->
 <!-- @var:id=lemonade_model value="gpt-oss-120b-mxfp-GGUF" -->
 <!-- @device:end -->
 
 <!-- @device:stx,krk,rx7900xt,rx9070xt,r9700 -->
-<!-- @require:lemonade-models-gpt-oss-20b -->
+<!-- @prereq:lemonade-models-gpt-oss-20b -->
 <!-- @var:id=lemonade_model value="gpt-oss-20b-mxfp4-GGUF" -->
 <!-- @device:end -->
 
@@ -195,10 +199,15 @@ npm -v
 <!-- @test:end -->
 
 ## Installing n8n
-
-n8n is installed as part of the [prerequisites](#installing-software-prerequisites) above. Confirm it is available:
-
 <!-- @os:windows -->
+Install n8n globally using npm.
+
+> **Note**: You may see some npm warnings. This is expected.
+
+```bash
+npm install -g n8n
+```
+
 <!-- @test:id=n8n-version timeout=60 hidden=True -->
 ```bash
 n8n --version

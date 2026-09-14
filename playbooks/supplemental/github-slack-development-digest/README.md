@@ -76,11 +76,15 @@ test the automation, and Lemonade to run the LLM locally.
 ## Prerequisites
 
 <!-- @os:linux -->
-<!-- @require:lemonade,nodejs,lemonade-models-qwen3-35b-a3b -->
+<!-- @require = dependency docs rendered on the website; @prereq = CI-only, validated and auto-installed before tests (never rendered) -->
+<!-- @require:lemonade,nodejs -->
+<!-- @prereq:lemonade-models-qwen3-35b-a3b -->
 <!-- @os:end -->
 
 <!-- @os:windows -->
-<!-- @require:lemonade,nodejs,lemonade-models-qwen3-35b-a3b -->
+<!-- @require = dependency docs rendered on the website; @prereq = CI-only, validated and auto-installed before tests (never rendered) -->
+<!-- @require:lemonade,nodejs -->
+<!-- @prereq:lemonade-models-qwen3-35b-a3b -->
 <!-- @os:end -->
 
 You need:

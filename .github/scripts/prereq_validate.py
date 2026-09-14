@@ -11,7 +11,7 @@ Runs on a CI runner *before* ``run_playbook_tests.py`` to make sure the
 prerequisites a playbook needs are actually present on the machine -- and to
 **self-heal** the runner by installing anything that is missing.
 
-For each ``@require:<dep>`` a playbook declares (scoped to the active
+For each ``@require:<dep>`` or ``@prereq:<dep>`` a playbook declares (scoped to the active
 ``@os:``/``@device:`` blocks), this reads a ``validate`` and optional
 ``install`` command from ``playbooks/dependencies/registry.json`` and runs a
 validate -> (if missing) install -> re-validate loop:
@@ -58,19 +58,28 @@ def find_playbook_path(playbook_id: str, repo_root: Path) -> Optional[Path]:
 def extract_scoped_requires(
     content: str, platform: str, device: Optional[str]
 ) -> list[str]:
-    """Return the ordered, de-duplicated list of @require dep-ids that apply
-    to the active platform/device.
+    """Return the ordered, de-duplicated list of dep-ids that apply to the
+    active platform/device.
 
-    @require tags may be wrapped in ``@os:<p>``/``@device:<d,...>`` blocks. A
-    require is in scope when the current @os block (if any) matches ``platform``
-    AND the current @device block (if any) matches ``device``. A require with no
-    enclosing block of a given kind is unscoped for that kind (applies to all).
+    Two tags are honored, and their results are unioned:
+
+    * ``@require:<ids>`` -- the existing tag. It is also consumed by the website,
+      which inlines each dependency doc at the tag site, so it is user-facing.
+    * ``@prereq:<ids>``  -- CI-only. Nothing renders it, so it declares a
+      dependency that must be validated (and auto-installed) before the tests
+      run without changing any published page.
+
+    Either tag may be wrapped in ``@os:<p>``/``@device:<d,...>`` blocks. A tag is
+    in scope when the current @os block (if any) matches ``platform`` AND the
+    current @device block (if any) matches ``device``. A tag with no enclosing
+    block of a given kind is unscoped for that kind (applies to all).
     """
     os_re = re.compile(r"<!--\s*@os:([\w,]+)\s*-->")
     os_end_re = re.compile(r"<!--\s*@os:end\s*-->")
     dev_re = re.compile(r"<!--\s*@device:([\w,]+)\s*-->")
     dev_end_re = re.compile(r"<!--\s*@device:end\s*-->")
-    req_re = re.compile(r"<!--\s*@require:([a-z0-9\-,]+)\s*-->")
+    # Matches @require: and @prereq: alike; both feed the same dependency list.
+    req_re = re.compile(r"<!--\s*@(?:require|prereq):([a-z0-9\-,]+)\s*-->")
 
     cur_os: Optional[set[str]] = None
     cur_dev: Optional[set[str]] = None
@@ -223,8 +232,8 @@ def validate_prereqs(playbook_id: str, platform: str, device: Optional[str]) -> 
     scope = f"{platform}/{device}" if device else platform
     print(f"Prerequisite validation for {playbook_id} ({scope})")
     if not required:
-        print("No @require dependencies in scope; nothing to validate.")
-    print(f"In-scope requires: {', '.join(required) if required else '(none)'}\n")
+        print("No @require/@prereq dependencies in scope; nothing to validate.")
+    print(f"In-scope dependencies: {', '.join(required) if required else '(none)'}\n")
 
     results = []
     for dep_id in required:

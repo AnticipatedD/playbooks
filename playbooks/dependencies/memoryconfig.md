@@ -13,6 +13,35 @@ Download and install the latest **AMD Software: Adrenalin Edition** from
 > **Note:** The installer may not create a Start menu shortcut. If you can't find
 > it, launch it manually from
 > `C:\Program Files\AMD\CNext\CNext\RadeonSoftware.exe`.
+
+<!-- CI-only presence check: confirm Adrenalin is installed at the documented
+     path. Hidden from the website; non-failing so a runner without Adrenalin
+     does not block unrelated playbooks. -->
+<!-- @test:id=adrenalin-installed-windows timeout=60 hidden=True continue_on_error=true -->
+```powershell
+if (Test-Path "C:\Program Files\AMD\CNext\CNext\RadeonSoftware.exe") {
+  Write-Host "OK: AMD Software Adrenalin Edition is installed"
+} else {
+  Write-Error "RadeonSoftware.exe not found at C:\Program Files\AMD\CNext\CNext"
+  exit 1
+}
+```
+<!-- @test:end -->
+<!-- @os:end -->
+
+<!-- @os:linux -->
+<!-- CI-only presence check: there is no Adrenalin on Linux, so confirm the GPU
+     is reachable via ROCm instead. Hidden from the website; non-failing. -->
+<!-- @test:id=gpu-visible-linux timeout=60 hidden=True continue_on_error=true -->
+```bash
+if command -v rocminfo >/dev/null 2>&1 && rocminfo | grep -q gfx; then
+  echo "OK: GPU visible to ROCm"
+else
+  echo "GPU not visible via rocminfo" >&2
+  exit 1
+fi
+```
+<!-- @test:end -->
 <!-- @os:end -->
 
 <!-- @device:halo_box,halo,stx,krk -->

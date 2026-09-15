@@ -4,75 +4,76 @@ Copyright Advanced Micro Devices, Inc.
 SPDX-License-Identifier: MIT
 -->
 
+## Install AMD Software: Adrenalin Edition
+
+Download and install the latest **AMD Software: Adrenalin Edition** from
+[amd.com/en/products/software/adrenalin.html](https://www.amd.com/en/products/software/adrenalin.html).
+
 <!-- @os:windows -->
+> **Note:** The installer may not create a Start menu shortcut. If you can't find
+> it, launch it manually from
+> `C:\Program Files\AMD\CNext\CNext\RadeonSoftware.exe`.
+<!-- @os:end -->
 
-<!-- @device:halo_box -->
+<!-- @device:halo_box,halo,stx,krk -->
+## Advanced: increasing GPU memory (optional)
 
-For the Ryzen AI Halo, the dedicated GPU memory defaults to 64GB, which is sufficient for most workloads. For larger models or longer contexts, increasing this to 96GB may help. To adjust, open **AMD Software: Adrenalin Edition™** and navigate to **Performance → Tuning → AMD Variable Graphics Memory**. Reboot for the changes to take effect.
+You may need to increase the memory allocated to the GPU to run certain larger
+models or longer contexts. These devices use unified memory — the GPU shares
+system RAM — so this means letting the GPU claim more of that shared pool. Leave
+roughly 20% of system RAM for the operating system. This step is optional; the
+default allocation is enough for most workloads.
 
-<p align="center">
-  <img src="/api/dependencies/assets/memory-config/adrenalin_vram_new.png" alt="AMD Software Adrenalin Edition — AMD Variable Graphics Memory panel" width="600"/>
-</p>
+> **Note:** This is configured in the system BIOS/UEFI. Some system vendors lock
+> the memory configuration, so the setting may not be available on every machine.
 
-<!-- @device:end -->
+<!-- @os:windows -->
+On Windows, set the **UMA Frame Buffer Size** (dedicated graphics memory) in the
+system BIOS/UEFI:
 
-<!-- @device:halo,stx,krk -->
-
-To change the dedicated GPU memory value, open **AMD Software: Adrenalin Edition™** and navigate to **Performance → Tuning → AMD Variable Graphics Memory**. Reboot for the changes to take effect.
-
-<p align="center">
-  <img src="/api/dependencies/assets/memory-config/adrenalin_vram_new.png" alt="AMD Software Adrenalin Edition — AMD Variable Graphics Memory panel" width="600"/>
-</p>
-
-<!-- @device:end -->
-
+1. Reboot and enter setup (usually **Del**, **F2**, or **Esc** during startup).
+2. Find **UMA Frame Buffer Size** — also labeled *Integrated Graphics* or
+   *dedicated GPU memory*, often under **Advanced** or **AMD CBS → NBIO Common
+   Options**. Menu names vary by system vendor.
+3. Set it to the size you need (for large models, the maximum available, e.g. 96 GB).
+4. Save and reboot.
 <!-- @os:end -->
 
 <!-- @os:linux -->
+On Linux, keep the BIOS carve-out small and raise the shared **GTT/TTM** pool
+instead — the GPU maps system RAM dynamically, so a large fixed BIOS reservation
+just wastes memory.
 
-On Linux, to run larger models, increase the **shared memory** pool available to the GPU. This might involve setting the BIOS dedicated GPU memory to the minimum, so that the shared memory pool can be maximized.
+1. **BIOS/UEFI:** reboot, enter setup (**Del**, **F2**, or **Esc**), find **UMA
+   Frame Buffer Size** (*Integrated Graphics* / dedicated VRAM; often under
+   **Advanced** or **AMD CBS → NBIO Common Options**), and set it to the **minimum**
+   (512 MB if offered, otherwise the lowest value such as 2 GB). Save and reboot.
+   Menu names vary by vendor.
 
-<!-- @device:halo_box -->
-
-For the AMD Ryzen™ AI Halo, the default is 96GB shared. To modify this, open the **AMD Ryzen™ AI Developer Center** and go to the **Settings** tab. Under **Graphics Performance Settings**, increase the **Shared Video Memory** slider, then click **Apply Changes** and reboot for the changes to take effect.
-
-<p align="center">
-  <img src="/api/dependencies/assets/memory-config/linux_mem_new.png" alt="AMD Ryzen AI Developer Center — Graphics Performance Settings with Shared Video Memory slider" width="600"/>
-</p>
-
-<!-- @device:end -->
-
-<!-- @device:halo,stx,krk -->
-
-Increase the shared memory pool by changing the kernel's Translation Table Manager (TTM) page setting. AMD recommends setting the minimum dedicated VRAM in the BIOS (0.5 GB) so the maximum amount is available as shared memory.
-
-1. Install the `pipx` utility and add the path for pipx-installed wheels to the system search path:
+2. Install the `amd-debug-tools` helper:
 
    ```bash
    sudo apt install pipx
    pipx ensurepath
-   ```
-
-2. Install the `amd-debug-tools` wheel from PyPI:
-
-   ```bash
    pipx install amd-debug-tools
    ```
 
-3. Query the current shared memory settings:
+3. Query the current shared-memory limit:
 
    ```bash
    amd-ttm
    ```
 
-4. Increase the shared memory allocation (units in GB):
+4. Raise it (value in GB — pick a size that leaves headroom for the OS):
 
    ```bash
    amd-ttm --set <NUM>
    ```
 
-5. Reboot for the changes to take effect.
+5. Reboot for the change to take effect.
+
+> **Note:** Requires kernel **6.16.9 or newer**. Older kernels cap GPU-visible
+> memory at about 15.5 GB regardless of this setting.
+<!-- @os:end -->
 
 <!-- @device:end -->
-
-<!-- @os:end -->

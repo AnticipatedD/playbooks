@@ -1,7 +1,8 @@
 <!--
-Copyright Advanced Micro Devices, Inc.
 
-SPDX-License-Identifier: MIT
+### ROCm Certified Associate 
+![ROCm](hamd_amd-rocm-certified-associate.png)
+
 -->
 
 # AMD Playbooks

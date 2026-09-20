@@ -1,9 +1,6 @@
-<!--
-
-### ROCm Certified Associate 
-![ROCm](hamd_amd-rocm-certified-associate.png)
-
--->
+# MD ABUL HOSSAIN (AnticipatedD)
+[AMD ROCm™ Certified Associate](https://www.credly.com/badges/547d0971-2a6b-44f2-96bb-e44938a925c4/public_url)
+![AMD ROCm™ Certified Associate](amd-rocm-certified-associate.png)
 
 # AMD Playbooks
 

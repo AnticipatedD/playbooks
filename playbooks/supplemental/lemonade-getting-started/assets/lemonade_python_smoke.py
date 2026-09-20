@@ -8,7 +8,7 @@ import time
 
 client = OpenAI(
     base_url="http://127.0.0.1:13305/api/v1",
-    api_key="lemonade",
+    api_key=os.environ.get("LEMONADE_API_KEY", "lemonade"),
 )
 
 last_error = None

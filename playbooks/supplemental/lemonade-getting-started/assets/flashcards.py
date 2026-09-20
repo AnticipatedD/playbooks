@@ -7,7 +7,7 @@ import json
 import random
 
 # Configuration
-API_KEY = "lemonade"
+API_KEY = os.environ.get("LEMONADE_API_KEY", "lemonade")
 BASE_URL = "http://localhost:13305/api/v1"
 MODEL = "Gemma-4-E2B-it-GGUF"
 

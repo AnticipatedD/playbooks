@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PLAYBOOKS_ROOT=/app/playbooks
+    volumes:
+      - ./playbooks:/app/playbooks

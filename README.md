@@ -2,6 +2,11 @@
 
 [AMD ROCm™ Certified Associate](https://www.credly.com/badges/547d0971-2a6b-44f2-96bb-e44938a925c4/public_url)
 
+This badge was issued to [MD ABUL HOSSAIN](https://www.credly.com/users/mdhossain)
+
+**Date issued**: September 10, 2026 
+**Expires**: September 10, 2028
+
 ![AMD ROCm™ Certified Associate](amd-rocm-certified-associate.png)
 
 # AMD Playbooks

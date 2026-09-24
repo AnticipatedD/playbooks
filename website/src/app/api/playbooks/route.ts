@@ -59,45 +59,68 @@ function scanPlaybooks(): Playbook[] {
 }
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const publishedOnly = searchParams.get("published") !== "false";
-  const category = searchParams.get("category");
-  const platform = searchParams.get("platform");
+  try {
+    const { searchParams } = new URL(request.url);
+    const publishedOnly = searchParams.get("published") !== "false";
+    const category = searchParams.get("category");
+    const platform = searchParams.get("platform");
 
-  let playbooks = scanPlaybooks();
+    // Strict input validation checks at the API boundary
+    const validCategories = new Set(["core", "supplemental", "backup"]);
+    if (category && !validCategories.has(category)) {
+      return NextResponse.json(
+        { error: `Invalid category query parameter. Must be one of: ${Array.from(validCategories).join(", ")}` },
+        { status: 400 }
+      );
+    }
 
-  // Filter by published status
-  if (publishedOnly) {
-    playbooks = playbooks.filter((p) => p.published);
-  }
+    const validPlatforms = new Set(["windows", "linux"]);
+    if (platform && !validPlatforms.has(platform)) {
+      return NextResponse.json(
+        { error: `Invalid platform query parameter. Must be one of: ${Array.from(validPlatforms).join(", ")}` },
+        { status: 400 }
+      );
+    }
 
-  // Filter by category
-  if (category) {
-    playbooks = playbooks.filter((p) => p.category === category);
-  }
+    let playbooks = scanPlaybooks();
 
-  // Filter by platform
-  if (platform) {
-    playbooks = playbooks.filter((p) =>
-      Object.values(p.supported_platforms ?? {}).some(
-        (platforms) => platforms?.includes(platform as "windows" | "linux")
-      )
+    // Filter by published status
+    if (publishedOnly) {
+      playbooks = playbooks.filter((p) => p.published);
+    }
+
+    // Filter by category
+    if (category) {
+      playbooks = playbooks.filter((p) => p.category === category);
+    }
+
+    // Filter by platform
+    if (platform) {
+      playbooks = playbooks.filter((p) =>
+        Object.values(p.supported_platforms ?? {}).some(
+          (platforms) => platforms?.includes(platform as "windows" | "linux")
+        )
+      );
+    }
+
+    // Sort: featured first, then by category (core first), then by title
+    playbooks.sort((a, b) => {
+      if (a.isFeatured && !b.isFeatured) return -1;
+      if (!a.isFeatured && b.isFeatured) return 1;
+      
+      const categoryOrder = { core: 0, supplemental: 1, backup: 2 };
+      if (categoryOrder[a.category] !== categoryOrder[b.category]) {
+        return categoryOrder[a.category] - categoryOrder[b.category];
+      }
+      
+      return a.title.localeCompare(b.title);
+    });
+
+    return NextResponse.json(playbooks);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal operational error occurred processing the request map." },
+      { status: 500 }
     );
   }
-
-  // Sort: featured first, then by category (core first), then by title
-  playbooks.sort((a, b) => {
-    if (a.isFeatured && !b.isFeatured) return -1;
-    if (!a.isFeatured && b.isFeatured) return 1;
-    
-    const categoryOrder = { core: 0, supplemental: 1, backup: 2 };
-    if (categoryOrder[a.category] !== categoryOrder[b.category]) {
-      return categoryOrder[a.category] - categoryOrder[b.category];
-    }
-    
-    return a.title.localeCompare(b.title);
-  });
-
-  return NextResponse.json(playbooks);
 }
-
